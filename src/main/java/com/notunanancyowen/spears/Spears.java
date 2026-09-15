@@ -251,12 +251,12 @@ public final class Spears {
 
     public static ComponentType<List<EnchantmentEffectEntry<EnchantmentEntityEffect>>> POST_PIERCING_ATTACK;
     public static <T> ComponentType<T> registerEffect(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
-        return Registry.register(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Identifier.of(MOD_ID, id), (builderOperator.apply(ComponentType.builder())).build());
+        return Registry.register(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, Identifier.ofVanilla(id), (builderOperator.apply(ComponentType.builder())).build());
     }
 
     public static SpearedMobs SPEARED_MOBS;
     public static <T extends Criterion<?>> T registerCriterion(String id, T criterion) {
-        return Registry.register(Registries.CRITERION, Identifier.of(MOD_ID, id), criterion);
+        return Registry.register(Registries.CRITERION, Identifier.ofVanilla(id), criterion);
     }
 
     public static HashMap<String, Boolean> makeConfig() {
