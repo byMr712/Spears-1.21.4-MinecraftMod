@@ -1,0 +1,20 @@
+{
+  "item.minecraft.copper_spear": "Медное копьё",
+  "item.minecraft.diamond_spear": "Алмазное копьё",
+  "item.minecraft.golden_spear": "Золотое копьё",
+  "item.minecraft.iron_spear": "Железное копьё",
+  "item.minecraft.netherite_spear": "Незеритовое копьё",
+  "item.minecraft.stone_spear": "Каменное копьё",
+  "item.minecraft.wooden_spear": "Деревянное копьё",
+  "subtitles.item.spear_wood.attack": "Деревянное копьё колет",
+  "subtitles.item.spear_wood.hit": "Деревянное копьё попадает",
+  "subtitles.item.spear_wood.use": "Разгон с деревянным копьём",
+  "subtitles.item.spear.attack": "Копьё колет",
+  "subtitles.item.spear.hit": "Копьё попадает",
+  "subtitles.item.spear.lunge": "Выпад копьём",
+  "subtitles.item.spear.use": "Разгон с копьём",
+  "enchantment.minecraft.lunge": "Выпад",
+  "enchantment.minecraft.lunge.desc": "Копья продвигают вас вперед при использовании",
+  "advancements.adventure.spear_many_mobs.description": "Поразите пять мобов в одной атаке с разгона, используя копьё",
+  "advancements.adventure.spear_many_mobs.title": "Шашлык из мобов"
+}
