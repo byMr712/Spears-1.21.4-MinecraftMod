@@ -10,10 +10,6 @@
           "type": "minecraft:all_of",
           "effects": [
             {
-              "type": "minecraft:damage_item",
-              "amount": 1.0
-            },
-            {
               "type": "minecraft:apply_exhaustion",
               "amount": {
                 "type": "minecraft:linear",

@@ -103,8 +103,6 @@ public final class SpearsFabric implements ModInitializer {
         Spears.NETHERITE_SPEAR = Spears.registerSpear("netherite_spear", ToolMaterial.NETHERITE, 1.15F, 1.2F, 0.4F, 2.5F, 7.0F, 3.5F, 5.1F, 8.75F, 4.6F);
         Spears.COPPER_SPEAR = Spears.tryLoadCopperSpear(FabricLoader.getInstance().isModLoaded("copperagebackport") || FabricLoader.getInstance().isModLoaded("exlinecopperequipment"));
         Spears.POST_PIERCING_ATTACK = Spears.registerEffect("post_piercing_attack", builder -> builder.codec(EnchantmentEffectEntry.createCodec(EnchantmentEntityEffect.CODEC, LootContextTypes.ENCHANTED_DAMAGE).listOf()));
-        Registry.register(net.minecraft.registry.Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, net.minecraft.util.Identifier.ofVanilla("apply_impulse"), com.notunanancyowen.spears.enchantmentfx.ApplyImpulse.CODEC);
-        Registry.register(net.minecraft.registry.Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, net.minecraft.util.Identifier.ofVanilla("apply_exhaustion"), com.notunanancyowen.spears.enchantmentfx.ApplyExhaustion.CODEC);
         Spears.SPEARED_MOBS = Spears.registerCriterion("spear_mobs", new SpearedMobs());
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(itemGroup -> {
             itemGroup.addAfter(Items.NETHERITE_SWORD, Spears.WOODEN_SPEAR);
