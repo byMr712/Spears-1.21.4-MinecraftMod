@@ -19,11 +19,14 @@
   },
   "client": [
     "BipedEntityModelMixin",
+    "BipedEntityRenderStateMixin",
+    "BipedEntityRendererMixin",
     "ClientPlayerEntityMixin",
     "HeldItemFeatureRendererMixin",
     "HeldItemRendererMixin",
     "MinecraftClientMixin",
     "PiglinEntityModelMixin",
+    "PlayerEntityRendererMixin",
     "ZombieEntityModelMixin"
   ]
 }

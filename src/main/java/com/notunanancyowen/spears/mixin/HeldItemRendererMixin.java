@@ -27,26 +27,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HeldItemRenderer.class)
 public abstract class HeldItemRendererMixin {
-    @WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V", ordinal = 12))
-    private void suppressNormalSwing(MatrixStack instance, float x, float y, float z, Operation<Void> original, @Local(argsOnly = true) ItemStack itemStack) {
-        if(itemStack.get(Spears.SWING_ANIMATION) instanceof SwingAnimation s && (s.swingType().equals("stab") || s.swingType().equals("none"))) return;
-        original.call(instance, x, y, z);
-    }
-    @WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;applyEquipOffset(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Arm;F)V", ordinal = 8))
-    private void suppressSwapAnimation(HeldItemRenderer instance, MatrixStack matrices, Arm arm, float equipProgress, Operation<Void> original, @Local(argsOnly = true) AbstractClientPlayerEntity player, @Local(argsOnly = true) ItemStack itemStack) {
-        if(itemStack.get(Spears.SWING_ANIMATION) instanceof SwingAnimation s && s.swingType().equals("stab") && player.handSwingProgress > 0F) original.call(instance, matrices, arm, 0F);
-        else original.call(instance, matrices, arm, equipProgress);
-    }
-    @WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;applySwingOffset(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Arm;F)V"))
-    private void spearAnimation(HeldItemRenderer instance, MatrixStack matrices, Arm arm, float swingProgress, Operation<Void> original, @Local(argsOnly = true) ItemStack itemStack) {
+    @WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;swingArm(FFLnet/minecraft/client/util/math/MatrixStack;ILnet/minecraft/util/Arm;)V"))
+    private void spearSwingArm(HeldItemRenderer instance, float swingProgress, float equipProgress, MatrixStack matrices, int armX, Arm arm, Operation<Void> original, @Local(argsOnly = true) ItemStack itemStack) {
         if(itemStack.get(Spears.SWING_ANIMATION) instanceof SwingAnimation s) {
             if(s.swingType().equals("stab")) {
                 float g = -(MathHelper.cos(((float)Math.PI * MathHelper.clamp(MathHelper.getLerpProgress(swingProgress, 0.0F, 0.05F), 0.0F, 1.0F))) - 1.0F) / 2.0F;
                 float h = MathHelper.clamp(MathHelper.getLerpProgress(swingProgress, 0.05F, 0.2F), 0.0F, 1.0F);
                 h *= h;
                 float j = MathHelper.clamp(MathHelper.getLerpProgress(swingProgress, 0.4F, 1.0F), 0.0F, 1.0F);
-                if(j < 0.5F) j = j == 0.0F ? 0.0F : (float)(Math.pow(2.0F, (double)20.0F * (double) j - (double)10.0F) / (double)2.0F);
-                else j = j == 1.0F ? 1.0F : (float)(((double)2.0F - Math.pow(2.0F, (double)-20.0F * (double) j + (double)10.0F)) / (double)2.0F);
+                if(j < 0.5F) j = j == 0.0F ? 0.0F : (float)(Math.pow(2.0F, 20.0F * j - 10.0F) / 2.0F);
+                else j = j == 1.0F ? 1.0F : (float)((2.0F - Math.pow(2.0F, -20.0F * j + 10.0F)) / 2.0F);
                 boolean trident = itemStack.isOf(Items.TRIDENT);
                 matrices.translate(j * 0.1F * (g - h), -0.075F * (g - j), (trident ? -0.4F * (g - j) : 0F) + 0.65F * (g - h));
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-(trident ? 50.0F : 70.0F) * (g - j)));
@@ -55,10 +45,10 @@ public abstract class HeldItemRendererMixin {
             }
             if(s.swingType().equals("none")) return;
         }
-        original.call(instance, matrices, arm, swingProgress);
+        original.call(instance, swingProgress, equipProgress, matrices, armX, arm);
     }
 
-    @Inject(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getUseAction()Lnet/minecraft/util/UseAction;"))
+    @Inject(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getUseAction()Lnet/minecraft/item/consume/UseAction;"))
     private void insertSpearAnimation(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack item, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci, @Share("suppress") LocalBooleanRef suppress) {
         if(player.getActiveHand() == hand && item.get(Spears.KINETIC_WEAPON) instanceof KineticWeapon k) {
             Arm arm = hand == Hand.MAIN_HAND ? player.getMainArm() : player.getMainArm().getOpposite();
@@ -103,7 +93,8 @@ public abstract class HeldItemRendererMixin {
             suppress.set(true);
         }
     }
-    @WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;applyEquipOffset(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Arm;F)V", ordinal = 2))
+
+    @WrapOperation(method = "renderFirstPersonItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/item/HeldItemRenderer;applyEquipOffset(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Arm;F)V", ordinal = 1))
     private void suppressEquipOffsetForUseAnimation(HeldItemRenderer instance, MatrixStack matrices, Arm arm, float equipProgress, Operation<Void> original, @Share("suppress") LocalBooleanRef suppress) {
         if(!suppress.get()) original.call(instance, matrices, arm, equipProgress);
     }
