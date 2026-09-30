@@ -90,15 +90,6 @@ public abstract class LivingEntityMixin implements SpearUser {
         if(status == 2) spears$lastKineticAttackTime = ((LivingEntity)(Object)this).getEntityWorld().getTime();
     }
 
-    @Inject(method = "tick", at = @At("TAIL"))
-    private void tickPiercingCooldowns(CallbackInfo ci) {
-        if(!((LivingEntity)(Object)this).getEntityWorld().isClient() && spears$piercingCooldowns != null) for(Entity e : spears$piercingCooldowns.keySet()) {
-            long l = spears$piercingCooldowns.getLong(e);
-            if(l > 1) spears$piercingCooldowns.replace(e, l - 1);
-            else spears$piercingCooldowns.remove(e, l);
-        }
-    }
-
     @SuppressWarnings("all")
     @Override public float getTimeSinceLastKineticAttack(float tickProgress) {
         LivingEntity me = (LivingEntity)(Object)this;
