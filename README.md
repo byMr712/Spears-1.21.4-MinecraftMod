@@ -8,7 +8,7 @@
 ![ModMenu](https://img.shields.io/badge/ModMenu-Supported-blue.svg)
 ![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
 
-Порт и обновление мода **Spears** (Backported Spears) для **Minecraft 1.21.4 (Fabric)** от **byMr712**.
+Порт и обновление мода **Spears** (Backported Spears) для **Minecraft 1.21.4 (Fabric)**.
 
 Источник: [GitHub: Unknowneth/Backported-Spears](https://github.com/Unknowneth/Backported-Spears).
 

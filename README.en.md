@@ -8,7 +8,7 @@
 ![ModMenu](https://img.shields.io/badge/ModMenu-Supported-blue.svg)
 ![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
 
-Port and update of the **Spears** (Backported Spears) mod for **Minecraft 1.21.4 (Fabric)** by **byMr712**.
+Port and update of the **Spears** (Backported Spears) mod for **Minecraft 1.21.4 (Fabric)**.
 
 Source: [GitHub: Unknowneth/Backported-Spears](https://github.com/Unknowneth/Backported-Spears).
 
